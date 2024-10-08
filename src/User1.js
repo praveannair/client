@@ -13,8 +13,8 @@ export default function Users1() {
   const [task, setTask] = useState();
   const [answer, setAnswer] = useState();
   const [score, setScore] = useState();
-  const api = "http://localhost:8080";
-  // const api="https://merntodo-10m0.onrender.com"
+  // const api = "http://localhost:8080";
+  const api="https://merntodo-10m0.onrender.com"
 
   const showQuestion = async () => {
     await axios
