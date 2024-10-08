@@ -249,7 +249,7 @@ export default function Users1() {
               {question &&
                 question.map((obj) => (
                   <div key={obj._id}>
-                    <pre>{obj.task}</pre>
+                    <pre style={{fontSize:'18px'}}>{obj.task}</pre>
                     <h5>
                       Answer:
                       <select onChange={(e) => setAnswer(e.target.value)}>
