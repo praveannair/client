@@ -248,8 +248,8 @@ export default function Users1() {
               <button onClick={showQuestion}>Start</button>
               {question &&
                 question.map((obj) => (
-                  <div key={obj._id}>
-                    <pre style={{fontSize:'18px'}}>{obj.task}</pre>
+                  <div style={{fontSize:'20px'}} key={obj._id}>
+                    <pre>{obj.task}</pre>
                     <h5>
                       Answer:
                       <select onChange={(e) => setAnswer(e.target.value)}>
