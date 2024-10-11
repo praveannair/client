@@ -13,8 +13,9 @@ export default function Users1() {
   const [task, setTask] = useState();
   const [answer, setAnswer] = useState();
   const [score, setScore] = useState();
+  const [position, setPosition] = useState();
   // const api = "http://localhost:8080";
-  const api="https://merntodo-10m0.onrender.com"
+  const api = "https://merntodo-10m0.onrender.com";
 
   const showQuestion = async () => {
     await axios
@@ -35,11 +36,12 @@ export default function Users1() {
   // },[]);
 
   const submitAnswer = async (actualAnswer) => {
-    console.log(answer, actualAnswer,score);
+    console.log(answer, actualAnswer, score);
     if (answer === actualAnswer) {
       await axios
         .post(
-          `${api}/score/`,{},
+          `${api}/score/`,
+          {},
           {
             headers: {
               authorization: "Bearer " + token,
@@ -68,8 +70,6 @@ export default function Users1() {
       .catch((err) => console.log(err));
   };
 
-
-
   const getScore = async () => {
     await axios
       .get(`${api}/score/`, {
@@ -80,6 +80,16 @@ export default function Users1() {
         },
       })
       .then((result) => setScore(result.data.score))
+      .catch((err) => console.log(err));
+    await axios
+      .get(`${api}/score/position`, {
+        headers: {
+          authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((result) => setPosition(result.data))
       .catch((err) => console.log(err));
   };
 
@@ -148,7 +158,6 @@ export default function Users1() {
       <h1>Quiz Application</h1>
       <div style={{ display: "flex" }}>
         <div style={{ padding: "10px", backgroundColor: "silver" }}>
-         
           <h2>Sign In</h2>
           <p>
             <input
@@ -200,7 +209,6 @@ export default function Users1() {
           <p>
             <button onClick={handleSubmit}>Submit</button>
           </p>
-      
         </div>
         <div style={{ padding: "10px" }}>
           {email === "trina@gmail.com" ? (
@@ -215,7 +223,7 @@ export default function Users1() {
               </p>
               <p>
                 <select onChange={(e) => setAnswer(e.target.value)}>
-                <option value="0">--Select--</option>
+                  <option value="0">--Select--</option>
                   <option value="a">a</option>
                   <option value="b">b</option>
                   <option value="c">c</option>
@@ -244,16 +252,18 @@ export default function Users1() {
             </>
           ) : (
             <>
+            <div style={{display:'flex'}}>
+              <div style={{width:'1000px'}}>
               <h1>Question (Score:{score})</h1>
               <button onClick={showQuestion}>Start</button>
               {question &&
                 question.map((obj) => (
-                  <div style={{fontSize:'20px'}} key={obj._id}>
+                  <div style={{ fontSize: "20px" }} key={obj._id}>
                     <pre>{obj.task}</pre>
                     <h5>
                       Answer:
                       <select onChange={(e) => setAnswer(e.target.value)}>
-                      <option value="0">--Select--</option>
+                        <option value="0">--Select--</option>
                         <option value="a">a</option>
                         <option value="b">b</option>
                         <option value="c">c</option>
@@ -265,6 +275,24 @@ export default function Users1() {
                     </button>
                   </div>
                 ))}
+                </div>
+                <div>
+                  <h3>Ranking List</h3>
+              <ol>
+                {position &&
+                  position.map((obj) => (
+                    <li key={obj._id}>
+                     
+                      {obj.user[0].email === email ? (
+                        <i>You are here</i>
+                      ) : (
+                        <i>--------------</i>
+                      )}
+                    </li>
+                  ))}
+              </ol>
+              </div>
+              </div>
             </>
           )}
         </div>
