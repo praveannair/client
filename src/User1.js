@@ -254,7 +254,7 @@ export default function Users1() {
             <>
             <div style={{display:'flex'}}>
               <div style={{width:'1000px'}}>
-              <h1>Question (Score:{score})</h1>
+              <h1>Frontend Developer Quiz (Score:{score})</h1>
               <button onClick={showQuestion}>Start/Skip</button>
               {question &&
                 question.map((obj) => (
